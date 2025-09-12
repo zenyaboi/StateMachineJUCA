@@ -1,5 +1,5 @@
-public enum States {
-    WORKING,
-    EATING,
-    SLEEPING,
+public interface States {
+    void enter();
+    void execute();
+    void leave();
 }
