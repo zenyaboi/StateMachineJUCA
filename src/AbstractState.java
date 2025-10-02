@@ -1,13 +1,18 @@
-public abstract class AbstractState implements States {
-    protected Juca juca;
+public abstract class AbstractState<C extends Character> implements States<C> {
+    protected final C character;
 
-    public AbstractState(Juca juca) {
-        this.juca = juca;
+    public AbstractState(C character) {
+        this.character = character;
     }
 
     @Override
-    public void enter() { }
+    public C getCharacter() {
+        return character;
+    }
 
     @Override
-    public void leave() { }
+    public void enter() {}
+
+    @Override
+    public void leave() {}
 }

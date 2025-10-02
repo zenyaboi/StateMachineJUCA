@@ -1,31 +1,27 @@
-public class Working extends AbstractState {
-    public Working(Juca juca) {
-        super(juca);
+public class Working extends AbstractState<Juca> {
+    public Working(Juca character) {
+        super(character);
     }
 
     @Override
     public void enter() {
-        System.out.println("Hora de ir para o trabalho!");
+        System.out.println("Juca começou a trabalhar.");
     }
 
     @Override
     public void execute() {
-        System.out.println("Trabalhando...");
+        character.setFatigue(character.getFatigue() + 2);
+        character.setHunger(character.getHunger() + 1);
 
-        juca.increaseHunger(2);
-        juca.increaseFatigue(5);
-
-        if (juca.getFatigue() > 50) {
-            juca.changeState(new Sleeping(juca));
-            System.out.println("Bateu um sono...");
-        } else if (juca.getHunger() > 10) {
-            juca.changeState(new Eating(juca));
-            System.out.println("Bateu uma fome...");
+        if (character.getHunger() >= 10) {
+            character.setState(new Eating(character));
+        } else if (character.getFatigue() >= 10) {
+            character.setState(new Sleeping(character));
         }
     }
 
     @Override
     public void leave() {
-        System.out.println("Saindo do trabalho...");
+        System.out.println("Juca parou de trabalhar.");
     }
 }

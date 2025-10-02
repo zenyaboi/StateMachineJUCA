@@ -1,6 +1,6 @@
-public class Eating extends AbstractState {
-    public Eating(Juca juca) {
-        super(juca);
+public class Eating extends AbstractState<Juca> {
+    public Eating(Juca character) {
+        super(character);
     }
 
     @Override
@@ -10,12 +10,12 @@ public class Eating extends AbstractState {
 
     @Override
     public void execute() {
-        juca.decreaseHunger(5);
+        character.setHunger(character.getHunger() - 5);
 
-        if (juca.getHunger() <= 0) {
-            juca.setHunger(0);
+        if (character.getHunger() <= 0) {
+            character.setHunger(0);
             System.out.println("Ufa! Já estou cheio...");
-            juca.changeState(new Working(juca));
+            character.setState(new Working(character));
         }
     }
 

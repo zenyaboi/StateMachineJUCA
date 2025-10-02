@@ -1,45 +1,44 @@
-public class Juca {
-    private States currentState;
+public class Juca implements Character {
     private int hunger;
     private int fatigue;
+    private States<Juca> state;
 
     public Juca() {
-        // Setting variables
         this.hunger = 0;
         this.fatigue = 0;
-
-        changeState(new Working(this));
+        this.state = new Working(this);
     }
 
-    public void doAction() {
-        currentState.execute();
-        printStatus();
+    @Override
+    public void update() {
+        state.execute();
     }
 
-    public void changeState(States newState) {
-        if (currentState != null) {
-            currentState.leave();
-        }
-        currentState = newState;
-        currentState.enter();
+    @Override
+    public void setState(States<?> newState) {
+        state.leave();
+        this.state = (States<Juca>) newState;
+        state.enter();
     }
 
-    // Getters & Setters
-    public int getHunger() { return hunger; }
-    public int getFatigue() { return fatigue; }
+    @Override
+    public void printStats() {
+        System.out.println("Juca -> Fome: " + hunger + " | Cansaço: " + fatigue);
+    }
 
-    public void setHunger(int hunger) { this.hunger = Math.max(hunger, 0); }
-    public void setFatigue(int fatigue) { this.fatigue = Math.max(fatigue, 0); }
+    public int getHunger() {
+        return hunger;
+    }
 
-    public void increaseHunger(int value) { hunger = Math.max(0, hunger + value); }
-    public void decreaseHunger(int value) { hunger = Math.max(0, hunger - value); }
+    public void setHunger(int hunger) {
+        this.hunger = hunger;
+    }
 
-    public void increaseFatigue(int value) { fatigue = Math.max(0, fatigue + value); }
-    public void decreaseFatigue(int value) { fatigue = Math.max(0, fatigue - value); }
+    public int getFatigue() {
+        return fatigue;
+    }
 
-    private void printStatus() {
-        System.out.println("Fome: " + hunger);
-        System.out.println("Cansaço: " + fatigue);
-        System.out.println("-------------------");
+    public void setFatigue(int fatigue) {
+        this.fatigue = fatigue;
     }
 }

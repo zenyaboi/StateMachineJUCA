@@ -1,6 +1,6 @@
-public class Sleeping extends AbstractState {
-    public Sleeping(Juca juca) {
-        super(juca);
+public class Sleeping extends AbstractState<Juca> {
+    public Sleeping(Juca character) {
+        super(character);
     }
 
     @Override
@@ -10,16 +10,16 @@ public class Sleeping extends AbstractState {
 
     @Override
     public void execute() {
-        juca.increaseHunger(1);
-        juca.decreaseFatigue(10);
+        character.setHunger(character.getHunger() + 1);
+        character.setFatigue(character.getFatigue() - 10);
 
-        if (juca.getFatigue() <= 0) {
-            juca.setFatigue(0);
-            if (juca.getHunger() > 10) {
-                juca.changeState(new Eating(juca));
+        if (character.getFatigue() <= 0) {
+            character.setFatigue(0);
+            if (character.getHunger() > 10) {
+                character.setState(new Eating(character));
                 System.out.println("Bateu uma fome...");
             } else {
-                juca.changeState(new Working(juca));
+                character.setState(new Working(character));
             }
         }
     }
